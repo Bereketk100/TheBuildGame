@@ -17,7 +17,7 @@ const MainPage = () => {
   };
   const services = [
     {
-      title: "Firewatch",
+      title: "Fireewatch",
       description: "Comprehensive fire monitoring and prevention services to keep your property safe.",
       path: "/services/firewatch",
       icon: <svg
@@ -288,7 +288,7 @@ const MainPage = () => {
               SECUREAI
             </h1>
             <p className="text-xl mb-8 text-gray-300 max-w-2xl mx-auto">
-              Intelligent protection for what matters most, designed with you in mind.
+              Intelligent protection for what matters most, designed with you in mind!
             </p>
             <div className="flex justify-center space-x-6">
               <button 
@@ -303,6 +303,92 @@ const MainPage = () => {
               >
                 Contact Us
               </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Problem & Solution Section */}
+        <section className="py-24 bg-gradient-to-b from-black via-gray-900 to-black">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              {/* Problem Statement */}
+              <div className="text-center mb-16">
+                <h2 className="text-4xl font-bold mb-6 text-red-500">The Critical Gap in Traditional Security</h2>
+                <p className="text-xl text-gray-300 mb-8">Most security companies operate in the dark, leaving you exposed to unnecessary risks.</p>
+              </div>
+
+              {/* Problem Details */}
+              <div className="grid md:grid-cols-2 gap-12 mb-20">
+                <div className="bg-gray-800/50 p-8 rounded-xl backdrop-blur">
+                  <h3 className="text-2xl font-semibold mb-4 text-white">The Real Problem</h3>
+                  <ul className="space-y-4">
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-red-500 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                      <span className="text-gray-300">No system to verify if guards are on-site or performing their duties</span>
+                    </li>
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-red-500 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                      <span className="text-gray-300">Guards disappearing for hours during shifts—unnoticed until incidents occur</span>
+                    </li>
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-red-500 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                      <span className="text-gray-300">Billions lost annually in damages, theft, and legal liability</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="bg-blue-900/50 p-8 rounded-xl backdrop-blur">
+                  <h3 className="text-2xl font-semibold mb-4 text-white">The SecureAI Solution</h3>
+                  <ul className="space-y-4">
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-blue-400 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <div>
+                        <span className="text-blue-400 font-semibold">Live Activity Tracking</span>
+                        <p className="text-gray-300">Real-time monitoring of guard locations, activities, and checkpoint compliance</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-blue-400 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <div>
+                        <span className="text-blue-400 font-semibold">Transparent Guard Logs</span>
+                        <p className="text-gray-300">Time-stamped, verified records of all security activities</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <svg className="w-6 h-6 text-blue-400 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <div>
+                        <span className="text-blue-400 font-semibold">Instant Alert System</span>
+                        <p className="text-gray-300">Immediate notifications for any security protocol breaches</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Call to Action */}
+              <div className="text-center">
+                <p className="text-2xl font-semibold text-white mb-8">
+                  Because security without accountability isn't security at all.
+                </p>
+                <button 
+                  onClick={() => scrollToSection(contactRef, 'contact')}
+                  className="bg-blue-600 hover:bg-blue-500 py-4 px-10 rounded-full text-white font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-500/50"
+                >
+                  Secure Your Business Now
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -345,7 +431,7 @@ const MainPage = () => {
                   </div>
                   <p className="text-gray-300 font-medium">Microsoft Software Engineer</p>
                   <p className="text-gray-400 mt-4 leading-relaxed flex-grow">
-                    A graduate of the University of Southern California, where he worked as a security specialist during his time there. Bringing his unique combination of security operations experience and software engineering expertise to revolutionize the security industry.
+                    A graduate of the University of Southern California with three years of hands-on security experience. Currently at Microsoft as a software engineer, he combines his security operations background with technical expertise to develop innovative security solutions. His dual experience helps bridge the gap between practical security needs and technological advancement.
                   </p>
                   <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-700">
                     <img src="/microsoft-logo.png" alt="Microsoft" className="h-11" />
@@ -369,7 +455,7 @@ const MainPage = () => {
                   </div>
                   <p className="text-gray-300 font-medium">Microsoft Software Engineer</p>
                   <p className="text-gray-400 mt-4 leading-relaxed flex-grow">
-                    A Yale University graduate bringing advanced technical expertise to our security solutions. His innovative approach to software engineering helps drive our AI-powered security systems forward.
+                    A Yale University graduate specializing in security system architecture. At Microsoft, he leads the development of enterprise security solutions, bringing technical innovation to our platform. His expertise in both software engineering and security infrastructure helps strengthen our AI-powered security systems.
                   </p>
                   <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-700">
                     <img src="/microsoft-logo.png" alt="Microsoft" className="h-12" />
@@ -393,7 +479,7 @@ const MainPage = () => {
                   </div>
                   <p className="text-gray-300">Target HQ Data Analyst</p>
                   <p className="text-gray-400 mt-4 leading-relaxed flex-grow">
-                    A San Jose State graduate ensuring seamless operations and data-driven solutions
+                    A San Jose State graduate with extensive experience in security operations. Having served as a Securities Operational Manager for 5 years, he brings valuable insights to our data analytics and operational efficiency. His combination of hands-on security management experience and data analysis skills helps ensure seamless operations and data-driven solutions for our clients.
                   </p>
                   <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-700">
                     <img src="/target-logo.png" alt="Target" className="h-12" />
