@@ -188,12 +188,12 @@ const MainPage = () => {
         isMenuOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'
       }`}></div>
       
-      {/* Navigation Banner */}
-      <nav className="fixed top-0 w-full backdrop-blur-xl bg-black/80 border-b border-white/5 shadow-xl z-50">
+      {/* Navigation Banner (desktop only) */}
+      <nav className="hidden md:block fixed top-0 w-full backdrop-blur-xl bg-black/80 border-b border-white/5 shadow-xl z-50">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Desktop navigation */}
-            <div className="hidden md:flex items-center justify-center flex-1">
+            <div className="flex items-center justify-center flex-1">
               {['Home', 'Services', 'About Us', 'Contact Us', 'Our Mission'].map((item) => (
                 <button 
                   key={item}
@@ -213,87 +213,85 @@ const MainPage = () => {
                 </button>
               ))}
             </div>
-            
-            {/* Mobile menu button */}
-            <div className="md:hidden w-full flex justify-end">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-300 hover:text-white bg-gray-800/50 p-2 rounded-lg backdrop-blur-xl"
-              >
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  {isMenuOpen ? (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  ) : (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  )}
-                </svg>
-              </button>
-            </div>
-
-
-          </div>
-
-          {/* Mobile navigation overlay */}
-          <div className={`md:hidden fixed inset-0 z-40 transition-opacity duration-150 ease-in-out ${
-            isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-          }`}>
-            <div className="absolute inset-0 bg-black/95 backdrop-blur-lg"></div>
-          </div>
-
-          {/* Mobile navigation menu */}
-          <div className={`md:hidden fixed inset-0 z-50 transform transition-all duration-150 ease-in-out ${
-            isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
-          }`}>
-            <div className="flex flex-col items-center justify-center min-h-screen p-12 space-y-8">
-              {['Home', 'Services', 'About Us', 'Contact Us', 'Our Mission'].map((item, index) => (
-                <button
-                  key={item}
-                  onClick={() => {
-                    scrollToSection(
-                      item === 'Home' ? homeRef :
-                      item === 'Services' ? servicesRef :
-                      item === 'About Us' ? aboutRef :
-                      item === 'Contact Us' ? contactRef :
-                      missionRef,
-                      item.toLowerCase().replace(' ', '')
-                    );
-                    setIsMenuOpen(false);
-                  }}
-                  className={`text-3xl font-medium text-white hover:text-emerald-400 transition-all duration-150 uppercase tracking-wider ${
-                    isMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-                  }`}
-                  style={{ transitionDelay: `${index * 40}ms` }}
-                >
-                  {item}
-                </button>
-              ))}
-              <button
-                onClick={() => setIsMenuOpen(false)}
-                className="fixed top-6 right-6 text-white hover:text-emerald-400 p-3 bg-gray-900/80 rounded-full backdrop-blur-sm border border-white/10"
-              >
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
           </div>
         </div>
       </nav>
+
+      {/* Mobile menu icon (only on mobile) */}
+      <div className="md:hidden fixed top-0 right-0 z-50 p-4">
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="text-gray-300 hover:text-white bg-gray-800/50 p-2 rounded-lg backdrop-blur-xl"
+        >
+          <svg
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            {isMenuOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            )}
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile navigation overlay */}
+      <div className={`md:hidden fixed inset-0 z-40 transition-opacity duration-150 ease-in-out ${
+        isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+      }`}>
+        <div className="absolute inset-0 bg-black/95 backdrop-blur-lg"></div>
+      </div>
+
+      {/* Mobile navigation menu */}
+      <div className={`md:hidden fixed inset-0 z-50 transform transition-all duration-150 ease-in-out ${
+        isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
+      }`}>
+        <div className="flex flex-col items-center justify-center min-h-screen p-12 space-y-8">
+          {['Home', 'Services', 'About Us', 'Contact Us', 'Our Mission'].map((item, index) => (
+            <button
+              key={item}
+              onClick={() => {
+                scrollToSection(
+                  item === 'Home' ? homeRef :
+                  item === 'Services' ? servicesRef :
+                  item === 'About Us' ? aboutRef :
+                  item === 'Contact Us' ? contactRef :
+                  missionRef,
+                  item.toLowerCase().replace(' ', '')
+                );
+                setIsMenuOpen(false);
+              }}
+              className={`text-3xl font-medium text-white hover:text-emerald-400 transition-all duration-150 uppercase tracking-wider ${
+                isMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+              }`}
+              style={{ transitionDelay: `${index * 40}ms` }}
+            >
+              {item}
+            </button>
+          ))}
+          <button
+            onClick={() => setIsMenuOpen(false)}
+            className="fixed top-6 right-6 text-white hover:text-emerald-400 p-3 bg-gray-900/80 rounded-full backdrop-blur-sm border border-white/10"
+          >
+            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
 
       <div className="pt-16">
         {/* Hero Section */}
