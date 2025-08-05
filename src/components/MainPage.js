@@ -17,9 +17,15 @@ const MainPage = () => {
   };
   const services = [
     {
-      title: "Fireewatch",
-      description: "Comprehensive fire monitoring and prevention services to keep your property safe.",
-      path: "/services/firewatch",
+      title: "Instant Cash Offers",
+      description: "Get a fair, no-obligation cash offer for your property within 24 hours.",
+      details: [
+        "Professional valuation based on current market conditions",
+        "Guaranteed offer within 24 hours of property inspection",
+        "No obligation to accept - take your time to decide",
+        "Transparent pricing with no hidden fees or commissions",
+        "Skip the uncertainty of traditional market listings"
+      ],
       icon: <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-7 w-7 text-white"
@@ -36,9 +42,15 @@ const MainPage = () => {
       </svg>
     },
     {
-      title: "Business Security",
-      description: "Enterprise-grade solutions designed to protect your business assets seamlessly.",
-      path: "/services/business",
+      title: "Quick Closing",
+      description: "Close in as little as 7 days or on your timeline. No waiting for bank approvals.",
+      details: [
+        "Close in as little as 7 days - you choose the timeline",
+        "No bank approval delays or financing contingencies",
+        "We handle all the paperwork and closing costs",
+        "Flexible move-out dates to fit your schedule",
+        "Professional title company handles the closing process"
+      ],
       icon: <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-7 w-7 text-white"
@@ -55,9 +67,15 @@ const MainPage = () => {
       </svg>
     },
     {
-      title: "Mobile Patrol",
-      description: "On-the-go security services to ensure safety and surveillance across various locations.",
-      path: "/services/mobile-patrol",
+      title: "As-Is Purchase",
+      description: "Sell your home in its current condition. No repairs or renovations needed.",
+      details: [
+        "We buy properties in any condition - no repairs needed",
+        "Skip costly renovations and contractor hassles",
+        "No cleaning or junk removal required",
+        "Perfect for inherited properties or deferred maintenance",
+        "Save thousands on pre-sale improvements"
+      ],
       icon: <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-7 w-7 text-white"
@@ -74,9 +92,15 @@ const MainPage = () => {
       </svg>
     },
     {
-      title: "Apartment/Neighborhood Security",
-      description: "Tailored security solutions for residential communities and apartment complexes.",
-      path: "/services/neighborhood",
+      title: "Zero Fees",
+      description: "No agent commissions, no hidden fees. Keep more money in your pocket.",
+      details: [
+        "No real estate agent commissions (save 6%)",
+        "We cover all closing costs and legal fees",
+        "No inspection or appraisal fees",
+        "No marketing or staging costs",
+        "What we offer is what you get - guaranteed"
+      ],
       icon: <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-7 w-7 text-white"
@@ -93,9 +117,15 @@ const MainPage = () => {
       </svg>
     },
     {
-      title: "Event Security",
-      description: "Professional security services for events, ensuring safety and smooth operations.",
-      path: "/services/event",
+      title: "Simple Process",
+      description: "A straightforward 3-step process: Request offer, Accept, Close. No complications.",
+      details: [
+        "1. Submit your property details online",
+        "2. Receive your cash offer within 24 hours",
+        "3. Choose your closing date and get paid",
+        "No showings, no back-and-forth negotiations",
+        "Professional support throughout the entire process"
+      ],
       icon: <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-7 w-7 text-white"
@@ -112,9 +142,15 @@ const MainPage = () => {
       </svg>
     },
     {
-      title: "SecureAI Platform",
-      description: "Revolutionary security management software for complete control and visibility of your security operations.",
-      path: "/services/additional",
+      title: "Local Experts",
+      description: "Work with experienced local real estate investors who know your market inside and out.",
+      details: [
+        "Deep knowledge of Arizona real estate markets",
+        "Over 15 years of combined local experience",
+        "Strong relationships with local title companies",
+        "Understanding of local regulations and processes",
+        "Direct communication with decision makers"
+      ],
       icon: <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-7 w-7 text-white"
@@ -135,19 +171,36 @@ const MainPage = () => {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navigation Banner */}
-      <nav className="fixed top-0 w-full bg-gray-900 shadow-lg z-50">
+      <nav className="fixed top-0 w-full backdrop-blur-xl bg-black/80 border-b border-white/5 shadow-xl z-50">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <img src="/logo.PNG" alt="SecureAI Logo" className="h-10 w-auto" />
-              <span className="ml-2 text-xl font-bold">SECUREAI</span>
+            {/* Desktop navigation */}
+            <div className="hidden md:flex items-center justify-center flex-1">
+              {['Home', 'Services', 'About Us', 'Contact Us', 'Our Mission'].map((item) => (
+                <button 
+                  key={item}
+                  onClick={() => scrollToSection(
+                    item === 'Home' ? homeRef :
+                    item === 'Services' ? servicesRef :
+                    item === 'About Us' ? aboutRef :
+                    item === 'Contact Us' ? contactRef :
+                    missionRef,
+                    item.toLowerCase().replace(' ', '')
+                  )}
+                  className={`text-sm uppercase tracking-wider font-medium transition-all duration-300 hover:text-emerald-400 relative mx-6 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-gradient-to-r after:from-emerald-400 after:to-blue-500 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 ${
+                    activeTab === item.toLowerCase().replace(' ', '') ? 'text-emerald-400 after:scale-x-100' : 'text-white'
+                  }`}
+                >
+                  {item}
+                </button>
+              ))}
             </div>
             
             {/* Mobile menu button */}
-            <div className="md:hidden">
+            <div className="md:hidden w-full flex justify-end">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-300 hover:text-white"
+                className="text-gray-300 hover:text-white bg-gray-800/50 p-2 rounded-lg backdrop-blur-xl"
               >
                 <svg
                   className="h-6 w-6"
@@ -174,135 +227,97 @@ const MainPage = () => {
               </button>
             </div>
 
-            {/* Desktop navigation */}
-            <div className="hidden md:flex space-x-8">
-              <button 
-                onClick={() => scrollToSection(homeRef, 'home')}
-                className={`text-sm font-medium transition-colors duration-200 ${
-                  activeTab === 'home' ? 'text-blue-500' : 'text-gray-300 hover:text-white'
-                }`}
-              >
-                Home
-              </button>
-              <button 
-                onClick={() => scrollToSection(servicesRef, 'services')}
-                className={`text-sm font-medium transition-colors duration-200 ${
-                  activeTab === 'services' ? 'text-blue-500' : 'text-gray-300 hover:text-white'
-                }`}
-              >
-                Services
-              </button>
-              <button 
-                onClick={() => scrollToSection(aboutRef, 'about')}
-                className={`text-sm font-medium transition-colors duration-200 ${
-                  activeTab === 'about' ? 'text-blue-500' : 'text-gray-300 hover:text-white'
-                }`}
-              >
-                About Us
-              </button>
-              <button 
-                onClick={() => scrollToSection(contactRef, 'contact')}
-                className={`text-sm font-medium transition-colors duration-200 ${
-                  activeTab === 'contact' ? 'text-blue-500' : 'text-gray-300 hover:text-white'
-                }`}
-              >
-                Contact Us
-              </button>
-              <button 
-                onClick={() => scrollToSection(missionRef, 'mission')}
-                className={`text-sm font-medium transition-colors duration-200 ${
-                  activeTab === 'mission' ? 'text-blue-500' : 'text-gray-300 hover:text-white'
-                }`}
-              >
-                Our Mission
-              </button>
-            </div>
+
+          </div>
+
+          {/* Mobile navigation overlay */}
+          <div className={`md:hidden fixed inset-0 z-40 transition-opacity duration-300 ${
+            isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}>
+            <div className="absolute inset-0 bg-black/90 backdrop-blur-lg"></div>
           </div>
 
           {/* Mobile navigation menu */}
-          {isMenuOpen && (
-            <div className="md:hidden">
-              <div className="px-2 pt-2 pb-3 space-y-1 bg-gray-900">
+          <div className={`md:hidden fixed inset-0 z-50 transform transition-all duration-500 ease-in-out ${
+            isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
+          }`}>
+            <div className="flex flex-col items-end justify-center min-h-screen p-12 space-y-6">
+              {['Home', 'Services', 'About Us', 'Contact Us', 'Our Mission'].map((item, index) => (
                 <button
+                  key={item}
                   onClick={() => {
-                    scrollToSection(homeRef, 'home');
+                    scrollToSection(
+                      item === 'Home' ? homeRef :
+                      item === 'Services' ? servicesRef :
+                      item === 'About Us' ? aboutRef :
+                      item === 'Contact Us' ? contactRef :
+                      missionRef,
+                      item.toLowerCase().replace(' ', '')
+                    );
                     setIsMenuOpen(false);
                   }}
-                  className="block w-full text-left px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-md"
+                  className={`text-2xl font-medium text-white hover:text-emerald-400 transition-all duration-500 uppercase tracking-wider transform hover:translate-x-[-8px] ${
+                    isMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+                  }`}
+                  style={{ transitionDelay: `${index * 150}ms` }}
                 >
-                  Home
+                  {item}
                 </button>
-                <button
-                  onClick={() => {
-                    scrollToSection(servicesRef, 'services');
-                    setIsMenuOpen(false);
-                  }}
-                  className="block w-full text-left px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-md"
-                >
-                  Services
-                </button>
-                <button
-                  onClick={() => {
-                    scrollToSection(aboutRef, 'about');
-                    setIsMenuOpen(false);
-                  }}
-                  className="block w-full text-left px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-md"
-                >
-                  About Us
-                </button>
-                <button
-                  onClick={() => {
-                    scrollToSection(contactRef, 'contact');
-                    setIsMenuOpen(false);
-                  }}
-                  className="block w-full text-left px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-md"
-                >
-                  Contact Us
-                </button>
-                <button
-                  onClick={() => {
-                    scrollToSection(missionRef, 'mission');
-                    setIsMenuOpen(false);
-                  }}
-                  className="block w-full text-left px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-md"
-                >
-                  Our Mission
-                </button>
-              </div>
+              ))}
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="absolute top-6 right-6 text-white hover:text-emerald-400 p-2 bg-gray-900/50 rounded-full backdrop-blur-sm"
+              >
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
-          )}
+          </div>
         </div>
       </nav>
 
       <div className="pt-16">
         {/* Hero Section */}
-        <section ref={homeRef} className="relative w-full h-screen flex items-center justify-center">
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black"></div>
+        <section ref={homeRef} className="relative w-full h-screen flex items-center justify-center bg-cover bg-center" style={{backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url("/modern-house.jpg")'}}>
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/50 to-black"></div>
           <div className="container mx-auto text-center relative z-10 px-4 max-w-4xl">
-            <img 
-              src="/logo.PNG" 
-              alt="Security Shield Logo" 
-              className="mx-auto mb--4 w-44 md:w-80 lg:w-96"
-            />
-            <h1 className="text-6xl font-bold mb-4 tracking-tight">
-              SECUREAI
+            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400 px-4 leading-tight">
+              The Build Game
             </h1>
-            <p className="text-xl mb-8 text-gray-300 max-w-2xl mx-auto">
-              Intelligent protection for what matters most, designed with you in mind!
+            <p className="text-xl sm:text-2xl lg:text-3xl mb-6 text-gray-100 max-w-3xl mx-auto font-light px-4 leading-tight">
+              Sell Your Property Fast. No Agents. No Fees.
             </p>
-            <div className="flex justify-center space-x-6">
-              <button 
-                onClick={() => scrollToSection(servicesRef, 'services')} 
-                className="bg-blue-600 hover:bg-blue-500 py-4 px-10 rounded-full text-white font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-500/50"
-              >
-                Get Started
-              </button>
+            <p className="text-lg sm:text-xl mb-12 text-gray-300 max-w-2xl mx-auto px-6 leading-relaxed">
+              Get a cash offer within 24 hours. Close on your timeline. Skip the stress of selling your home, condo, or apartment.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 px-6">
               <button 
                 onClick={() => scrollToSection(contactRef, 'contact')} 
-                className="bg-transparent hover:bg-blue-600/10 py-4 px-10 rounded-full text-white font-semibold text-lg transition-all duration-300 transform hover:scale-105 border-2 border-blue-600 hover:border-blue-500"
+                className="bg-gradient-to-r from-blue-500 to-emerald-500 hover:from-blue-600 hover:to-emerald-600 py-5 px-8 sm:px-12 rounded-lg text-white font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-blue-500/30 w-full sm:w-auto"
               >
-                Contact Us
+                Get Your Cash Offer Now
               </button>
+              <button 
+                onClick={() => scrollToSection(servicesRef, 'services')} 
+                className="bg-white/10 backdrop-blur-sm hover:bg-white/20 py-5 px-8 sm:px-12 rounded-lg text-white font-semibold text-lg transition-all duration-300 transform hover:scale-105 border border-white/30 w-full sm:w-auto"
+              >
+                How It Works
+              </button>
+            </div>
+            <div className="mt-12 sm:mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-3xl mx-auto text-center px-6">
+              <div className="bg-gray-900/30 backdrop-blur-sm p-4 rounded-xl border border-white/5">
+                <h3 className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-2">24h</h3>
+                <p className="text-sm sm:text-base text-gray-300">Cash Offer Timeline</p>
+              </div>
+              <div className="bg-gray-900/30 backdrop-blur-sm p-4 rounded-xl border border-white/5">
+                <h3 className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-2">7 Days</h3>
+                <p className="text-sm sm:text-base text-gray-300">Average Closing Time</p>
+              </div>
+              <div className="bg-gray-900/30 backdrop-blur-sm p-4 rounded-xl border border-white/5">
+                <h3 className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-2">0%</h3>
+                <p className="text-sm sm:text-base text-gray-300">Agent Commission</p>
+              </div>
             </div>
           </div>
         </section>
@@ -313,64 +328,64 @@ const MainPage = () => {
             <div className="max-w-6xl mx-auto">
               {/* Problem Statement */}
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold mb-6 text-red-500">The Critical Gap in Traditional Security</h2>
-                <p className="text-xl text-gray-300 mb-8">Most security companies operate in the dark, leaving you exposed to unnecessary risks.</p>
+                <h2 className="text-4xl font-bold mb-6 text-emerald-400">Why Traditional Home Selling Doesn't Work Anymore</h2>
+                <p className="text-xl text-gray-300 mb-8">The old way of selling homes is slow, expensive, and full of uncertainty. We've got a better solution.</p>
               </div>
 
               {/* Problem Details */}
               <div className="grid md:grid-cols-2 gap-12 mb-20">
                 <div className="bg-gray-800/50 p-8 rounded-xl backdrop-blur">
-                  <h3 className="text-2xl font-semibold mb-4 text-white">The Real Problem</h3>
+                  <h3 className="text-2xl font-semibold mb-4 text-white">Traditional Home Selling</h3>
                   <ul className="space-y-4">
                     <li className="flex items-start">
                       <svg className="w-6 h-6 text-red-500 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                       </svg>
-                      <span className="text-gray-300">No system to verify if guards are on-site or performing their duties</span>
+                      <span className="text-gray-300">6% agent commissions eating into your equity</span>
                     </li>
                     <li className="flex items-start">
                       <svg className="w-6 h-6 text-red-500 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                       </svg>
-                      <span className="text-gray-300">Guards disappearing for hours during shifts—unnoticed until incidents occur</span>
+                      <span className="text-gray-300">Months of uncertainty waiting for qualified buyers</span>
                     </li>
                     <li className="flex items-start">
                       <svg className="w-6 h-6 text-red-500 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                       </svg>
-                      <span className="text-gray-300">Billions lost annually in damages, theft, and legal liability</span>
+                      <span className="text-gray-300">Endless repairs, showings, and negotiations</span>
                     </li>
                   </ul>
                 </div>
 
-                <div className="bg-blue-900/50 p-8 rounded-xl backdrop-blur">
-                  <h3 className="text-2xl font-semibold mb-4 text-white">The SecureAI Solution</h3>
+                <div className="bg-emerald-900/50 p-8 rounded-xl backdrop-blur">
+                  <h3 className="text-2xl font-semibold mb-4 text-white">The Build Game Way</h3>
                   <ul className="space-y-4">
                     <li className="flex items-start">
-                      <svg className="w-6 h-6 text-blue-400 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-6 h-6 text-emerald-400 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       <div>
-                        <span className="text-blue-400 font-semibold">Live Activity Tracking</span>
-                        <p className="text-gray-300">Real-time monitoring of guard locations, activities, and checkpoint compliance</p>
+                        <span className="text-emerald-400 font-semibold">Direct Cash Offers</span>
+                        <p className="text-gray-300">Get a fair, no-obligation cash offer within 24 hours</p>
                       </div>
                     </li>
                     <li className="flex items-start">
-                      <svg className="w-6 h-6 text-blue-400 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-6 h-6 text-emerald-400 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       <div>
-                        <span className="text-blue-400 font-semibold">Transparent Guard Logs</span>
-                        <p className="text-gray-300">Time-stamped, verified records of all security activities</p>
+                        <span className="text-emerald-400 font-semibold">Zero Fees or Commissions</span>
+                        <p className="text-gray-300">Keep more money in your pocket - no middlemen involved</p>
                       </div>
                     </li>
                     <li className="flex items-start">
-                      <svg className="w-6 h-6 text-blue-400 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-6 h-6 text-emerald-400 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       <div>
-                        <span className="text-blue-400 font-semibold">Instant Alert System</span>
-                        <p className="text-gray-300">Immediate notifications for any security protocol breaches</p>
+                        <span className="text-emerald-400 font-semibold">Close On Your Timeline</span>
+                        <p className="text-gray-300">As fast as 7 days or whenever you're ready to move</p>
                       </div>
                     </li>
                   </ul>
@@ -380,145 +395,180 @@ const MainPage = () => {
               {/* Call to Action */}
               <div className="text-center">
                 <p className="text-2xl font-semibold text-white mb-8">
-                  Because security without accountability isn't security at all.
+                  Skip the stress, keep the profit. Sell your home the smart way.
                 </p>
                 <button 
                   onClick={() => scrollToSection(contactRef, 'contact')}
-                  className="bg-blue-600 hover:bg-blue-500 py-4 px-10 rounded-full text-white font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-500/50"
+                  className="bg-gradient-to-r from-blue-500 to-emerald-500 hover:from-blue-600 hover:to-emerald-600 py-4 px-10 rounded-lg text-white font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-emerald-500/30"
                 >
-                  Secure Your Business Now
+                  Get Your Cash Offer Now
                 </button>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Services Section */}
-        <section ref={servicesRef} className="py-24 bg-black">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-semibold text-center mb-16">Our Services</h2>
+        {/* How We Buy Homes Section */}
+        <section ref={servicesRef} className="py-24 bg-gradient-to-b from-black via-gray-900 to-black relative overflow-hidden">
+          <div className="absolute inset-0 bg-emerald-500/5 backdrop-blur-3xl"></div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-16">
+              <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">How We Buy Your Home</h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">Our streamlined process makes selling your home as simple as possible. Here's what you can expect when working with us.</p>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {services.map((service, index) => (
                 <ServiceCard key={index} {...service} />
               ))}
             </div>
           </div>
+          <div className="absolute -bottom-1/2 left-1/2 transform -translate-x-1/2 w-[200%] h-full bg-gradient-to-t from-emerald-500/10 to-transparent opacity-20 blur-3xl"></div>
         </section>
 
         {/* About Us Section */}
-        <section ref={aboutRef} className="py-24 bg-gray-900">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-semibold text-center mb-16">About Us</h2>
-            <div className="max-w-4xl mx-auto">
-              <p className="text-gray-300 text-lg mb-12 leading-relaxed">
-                SecureAI was founded by two security professionals who saw gaps in the industry and set out to redefine private security. With years of hands-on experience, they combined their expertise in AI technology, data analysis, and security operations to create a smarter, more reliable solution.
-              </p>
-
-              <div className="grid md:grid-cols-3 gap-8 mb-12">
-                <div className="bg-gray-800 p-8 rounded-xl flex flex-col h-full">
+        <section ref={aboutRef} className="py-32 bg-gradient-to-b from-black via-gray-900 to-black relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-blue-500/10"></div>
+          <div className="absolute -top-1/2 right-0 w-1/2 h-full bg-gradient-to-b from-emerald-500/20 to-blue-500/20 blur-3xl rotate-12 transform translate-x-1/2"></div>
+          <div className="absolute -bottom-1/2 left-0 w-1/2 h-full bg-gradient-to-t from-blue-500/20 to-emerald-500/20 blur-3xl -rotate-12 transform -translate-x-1/2"></div>
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-16">
+              <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">Meet The Team</h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">Our founders combine real estate expertise with technological innovation to revolutionize the home-selling process.</p>
+            </div>
+            <div className="max-w-6xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-8 mb-16">
+                <div className="bg-gray-800/30 backdrop-blur-xl p-8 rounded-2xl border border-white/5 transform hover:scale-105 transition-all duration-300 flex flex-col">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-semibold text-white">Bereket Kibret</h3>
+                    <h3 className="text-2xl font-bold text-white bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">Ricky Gutierrez</h3>
                     <a 
-                      href="https://www.linkedin.com/in/bereketkibret" 
+                      href="https://www.instagram.com/rickygutierrezz" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-blue-400 hover:text-blue-300"
                     >
                       <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                       </svg>
                     </a>
                   </div>
-                  <p className="text-gray-300 font-medium">Microsoft Software Engineer</p>
+                  <p className="text-gray-300 font-medium">CEO & Lead Investor</p>
                   <p className="text-gray-400 mt-4 leading-relaxed flex-grow">
-                    A graduate of the University of Southern California with three years of hands-on security experience. Currently at Microsoft as a software engineer, he combines his security operations background with technical expertise to develop innovative security solutions. His dual experience helps bridge the gap between practical security needs and technological advancement.
+                    Born and raised in Chandler, Arizona, Ricky studied entrepreneurship at Arizona State University before diving into real estate investing. As the founder of TechBud Solutions and a prominent YouTube educator, he's helped thousands learn the art of real estate investing. His expertise in both technology and real estate allows us to provide innovative solutions for homeowners.
                   </p>
-                  <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-700">
-                    <img src="/microsoft-logo.png" alt="Microsoft" className="h-11" />
-                    <img src="/usc-logo.png" alt="USC" className="h-8" />
-                  </div>
                 </div>
 
-                <div className="bg-gray-800 p-8 rounded-xl flex flex-col h-full">
+                <div className="bg-gray-800/30 backdrop-blur-xl p-8 rounded-2xl border border-white/5 transform hover:scale-105 transition-all duration-300 flex flex-col">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-semibold text-white">Samuel Tigistu</h3>
+                    <h3 className="text-2xl font-bold text-white bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">Weston Moore</h3>
                     <a 
-                      href="https://www.linkedin.com/in/samuel-tigistu-3060971a3/" 
+                      href="https://www.instagram.com/wesjangles" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-blue-400 hover:text-blue-300"
                     >
                       <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                       </svg>
                     </a>
                   </div>
-                  <p className="text-gray-300 font-medium">Microsoft Software Engineer</p>
+                  <p className="text-gray-300 font-medium">Chief Acquisitions Officer</p>
                   <p className="text-gray-400 mt-4 leading-relaxed flex-grow">
-                    A Yale University graduate specializing in security system architecture. At Microsoft, he leads the development of enterprise security solutions, bringing technical innovation to our platform. His expertise in both software engineering and security infrastructure helps strengthen our AI-powered security systems.
+                    A native Arizonan with over 15 years in real estate, Weston has closed hundreds of successful deals throughout the Phoenix metropolitan area. His deep understanding of the local market and commitment to transparent transactions has earned him a reputation as one of Arizona's most trusted real estate professionals.
                   </p>
-                  <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-700">
-                    <img src="/microsoft-logo.png" alt="Microsoft" className="h-12" />
-                    <img src="/yale-logo.png" alt="Yale" className="h-14" />
-                  </div>
-                </div>
-
-                <div className="bg-gray-800 p-8 rounded-xl flex flex-col h-full">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-semibold text-white">Maher Dedgeba</h3>
-                    <a 
-                      href="https://www.linkedin.com/in/maher-dedgeba-18893a2bb/" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-blue-400 hover:text-blue-300"
-                    >
-                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                      </svg>
-                    </a>
-                  </div>
-                  <p className="text-gray-300">Target HQ Data Analyst</p>
-                  <p className="text-gray-400 mt-4 leading-relaxed flex-grow">
-                    A San Jose State graduate with extensive experience in security operations. Having served as a Securities Operational Manager for 5 years, he brings valuable insights to our data analytics and operational efficiency. His combination of hands-on security management experience and data analysis skills helps ensure seamless operations and data-driven solutions for our clients.
-                  </p>
-                  <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-700">
-                    <img src="/target-logo.png" alt="Target" className="h-12" />
-                    <img src="/sjsu-logo.png" alt="San Jose State University" className="h-12" />
-                  </div>
                 </div>
               </div>
 
               <p className="text-gray-300 text-lg leading-relaxed">
-                By merging technology with in-person security, SecureAI is setting a new standard in safety and transparency—because security should evolve with the world around it. Our platform provides real-time monitoring, enhanced accountability, and faster response times, delivering a comprehensive security solution for the modern era.
+                Together, we're revolutionizing how homeowners sell their properties in Arizona. Our technology-driven approach combined with years of local market expertise ensures you get the best possible deal with the least amount of hassle.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Contact Us Section */}
-        <section ref={contactRef} id="contact" className="py-24 bg-black">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-semibold text-center mb-16">Contact Us</h2>
-            <div className="max-w-lg mx-auto">
-              <ContactForm />
+        {/* Submit Your Deal Section */}
+        <section ref={contactRef} id="contact" className="py-24 bg-gradient-to-b from-black via-gray-900 to-black relative overflow-hidden">
+          <div className="absolute inset-0 bg-blue-500/5 backdrop-blur-3xl"></div>
+          <div className="absolute -top-1/2 right-0 w-1/2 h-full bg-gradient-to-b from-emerald-500/20 to-blue-500/20 blur-3xl rotate-12 transform translate-x-1/2"></div>
+          <div className="absolute -bottom-1/2 left-0 w-1/2 h-full bg-gradient-to-t from-blue-500/20 to-emerald-500/20 blur-3xl -rotate-12 transform -translate-x-1/2"></div>
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-16">
+              <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
+                Submit Your Deal
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                Get your no-obligation cash offer within 24 hours. Tell us about your property and we'll make it happen.
+              </p>
+            </div>
+            <div className="max-w-2xl mx-auto">
+              <div className="bg-gray-800/50 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/5">
+                <ContactForm />
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Mission Section - Moved to end */}
-        <section ref={missionRef} className="py-24 bg-gray-900">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-semibold text-center mb-16">Our Mission</h2>
-            <div className="max-w-4xl mx-auto text-center">
-              <p className="text-gray-300 text-lg leading-relaxed mb-8">
-                At SecureAI, we are revolutionizing private security by integrating cutting-edge AI technology with professional, in-person security services. Our mission is to provide businesses, communities, and individuals with the highest level of safety, reliability, and transparency.
-              </p>
-              <p className="text-gray-300 text-lg leading-relaxed mb-8">
-                Through our AI-powered solutions, we enhance accountability, optimize response times, and ensure real-time monitoring, giving our clients complete peace of mind. We believe that security should be proactive, not reactive, and that technology should empower, not replace, human expertise.
-              </p>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                At SecureAI, we don't just provide security—we redefine it. Our commitment to innovation, excellence, and customer service drives us to continuously improve and adapt our solutions to meet the evolving security challenges of today's world.
-              </p>
+        {/* Mission Section */}
+        <section ref={missionRef} className="py-32 bg-gradient-to-b from-black via-gray-900 to-black relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-blue-500/10"></div>
+          <div className="absolute inset-0 bg-[url('/modern-house.jpg')] opacity-5 bg-cover bg-center"></div>
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-5xl mx-auto">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent px-4 leading-normal pb-2">
+                  Reimagining Real Estate
+                </h2>
+                <p className="text-xl text-gray-300 px-4">
+                  Building a better way to sell your property in Arizona
+                </p>
+              </div>
+              
+              <div className="grid md:grid-cols-3 gap-8 mb-16">
+                <div className="bg-gray-800/30 backdrop-blur-xl p-8 rounded-2xl border border-white/5 transform hover:scale-105 transition-all duration-300">
+                  <div className="text-emerald-400 mb-4">
+                    <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-4">Speed & Simplicity</h3>
+                  <p className="text-gray-300">
+                    We've streamlined the home-selling process to close deals in as little as 7 days. No more endless waiting and uncertainty.
+                  </p>
+                </div>
+
+                <div className="bg-gray-800/30 backdrop-blur-xl p-8 rounded-2xl border border-white/5 transform hover:scale-105 transition-all duration-300">
+                  <div className="text-emerald-400 mb-4">
+                    <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-4">Fair Value</h3>
+                  <p className="text-gray-300">
+                    Get the best possible price for your home with our transparent pricing and zero hidden fees or commissions.
+                  </p>
+                </div>
+
+                <div className="bg-gray-800/30 backdrop-blur-xl p-8 rounded-2xl border border-white/5 transform hover:scale-105 transition-all duration-300">
+                  <div className="text-emerald-400 mb-4">
+                    <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-4">Peace of Mind</h3>
+                  <p className="text-gray-300">
+                    Sell your home with confidence, knowing you're working with Arizona's most trusted real estate investors.
+                  </p>
+                </div>
+              </div>
+
+              <div className="text-center bg-gradient-to-r from-emerald-900/30 to-blue-900/30 backdrop-blur-xl p-12 rounded-2xl border border-white/5">
+                <p className="text-2xl text-white font-light mb-8 leading-relaxed">
+                  "Our vision is to create a world where selling your home is as simple as a handshake. No complications, no stress — just a fair deal and a quick close."
+                </p>
+                <p className="text-emerald-400 font-semibold">— Ricky Gutierrez, CEO & Founder</p>
+              </div>
             </div>
           </div>
         </section>
