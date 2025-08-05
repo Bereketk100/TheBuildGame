@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ServiceCard from './ServiceCard';
 import ContactForm from './ContactForm';
 
@@ -10,6 +10,11 @@ const MainPage = () => {
   const aboutRef = useRef(null);
   const contactRef = useRef(null);
   const missionRef = useRef(null);
+
+  // Set browser tab title to "The Build Game" (removes SecureAI)
+  useEffect(() => {
+    document.title = "The Build Game";
+  }, []);
 
   const scrollToSection = (ref, tabName) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
@@ -168,11 +173,19 @@ const MainPage = () => {
     }
   ];
 
+  // Prevent horizontal scroll/drag on mobile for seamless experience
+  useEffect(() => {
+    document.body.style.overflowX = 'hidden';
+    return () => {
+      document.body.style.overflowX = '';
+    };
+  }, []);
+
   return (
-    <div className={`min-h-screen bg-black text-white relative ${isMenuOpen ? 'overflow-hidden' : ''}`}>
+    <div className={`min-h-screen bg-black text-white relative overflow-x-hidden ${isMenuOpen ? 'overflow-hidden' : ''}`}>
       {/* Full-screen overlay when mobile menu is open */}
-      <div className={`fixed inset-0 bg-black/90 backdrop-blur-xl z-40 transition-all duration-200 ease-out md:hidden ${
-        isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+      <div className={`fixed inset-0 bg-black/95 backdrop-blur-xl z-40 transition-all duration-150 ease-in-out md:hidden ${
+        isMenuOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'
       }`}></div>
       
       {/* Navigation Banner */}
@@ -236,14 +249,14 @@ const MainPage = () => {
           </div>
 
           {/* Mobile navigation overlay */}
-          <div className={`md:hidden fixed inset-0 z-40 transition-opacity duration-150 ease-out ${
-            isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          <div className={`md:hidden fixed inset-0 z-40 transition-opacity duration-150 ease-in-out ${
+            isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}>
-            <div className="absolute inset-0 bg-black/90 backdrop-blur-lg"></div>
+            <div className="absolute inset-0 bg-black/95 backdrop-blur-lg"></div>
           </div>
 
           {/* Mobile navigation menu */}
-          <div className={`md:hidden fixed inset-0 z-50 transform transition-all duration-250 ease-out ${
+          <div className={`md:hidden fixed inset-0 z-50 transform transition-all duration-150 ease-in-out ${
             isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
           }`}>
             <div className="flex flex-col items-center justify-center min-h-screen p-12 space-y-8">
@@ -261,10 +274,10 @@ const MainPage = () => {
                     );
                     setIsMenuOpen(false);
                   }}
-                  className={`text-3xl font-medium text-white hover:text-emerald-400 transition-all duration-250 uppercase tracking-wider ${
+                  className={`text-3xl font-medium text-white hover:text-emerald-400 transition-all duration-150 uppercase tracking-wider ${
                     isMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
                   }`}
-                  style={{ transitionDelay: `${index * 80}ms` }}
+                  style={{ transitionDelay: `${index * 40}ms` }}
                 >
                   {item}
                 </button>
@@ -287,7 +300,7 @@ const MainPage = () => {
         <section
           ref={homeRef}
           className="relative w-full min-h-screen flex items-center justify-center bg-cover bg-center"
-          style={{ backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url("/modern-house.jpg")' }}
+          style={{ backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url("/modern-house.jpg")', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-gray-900/50 to-black"></div>
           <div className="container mx-auto text-center relative z-10 px-4 max-w-4xl flex flex-col justify-center items-center"
