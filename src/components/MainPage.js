@@ -169,7 +169,12 @@ const MainPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className={`min-h-screen bg-black text-white relative ${isMenuOpen ? 'overflow-hidden' : ''}`}>
+      {/* Full-screen overlay when mobile menu is open */}
+      <div className={`fixed inset-0 bg-black/90 backdrop-blur-xl z-40 transition-all duration-200 ease-out md:hidden ${
+        isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+      }`}></div>
+      
       {/* Navigation Banner */}
       <nav className="fixed top-0 w-full backdrop-blur-xl bg-black/80 border-b border-white/5 shadow-xl z-50">
         <div className="container mx-auto px-4">
@@ -231,17 +236,17 @@ const MainPage = () => {
           </div>
 
           {/* Mobile navigation overlay */}
-          <div className={`md:hidden fixed inset-0 z-40 transition-opacity duration-300 ${
+          <div className={`md:hidden fixed inset-0 z-40 transition-opacity duration-150 ease-out ${
             isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}>
             <div className="absolute inset-0 bg-black/90 backdrop-blur-lg"></div>
           </div>
 
           {/* Mobile navigation menu */}
-          <div className={`md:hidden fixed inset-0 z-50 transform transition-all duration-500 ease-in-out ${
+          <div className={`md:hidden fixed inset-0 z-50 transform transition-all duration-250 ease-out ${
             isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
           }`}>
-            <div className="flex flex-col items-end justify-center min-h-screen p-12 space-y-6">
+            <div className="flex flex-col items-center justify-center min-h-screen p-12 space-y-8">
               {['Home', 'Services', 'About Us', 'Contact Us', 'Our Mission'].map((item, index) => (
                 <button
                   key={item}
@@ -256,17 +261,17 @@ const MainPage = () => {
                     );
                     setIsMenuOpen(false);
                   }}
-                  className={`text-2xl font-medium text-white hover:text-emerald-400 transition-all duration-500 uppercase tracking-wider transform hover:translate-x-[-8px] ${
-                    isMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+                  className={`text-3xl font-medium text-white hover:text-emerald-400 transition-all duration-250 uppercase tracking-wider ${
+                    isMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
                   }`}
-                  style={{ transitionDelay: `${index * 150}ms` }}
+                  style={{ transitionDelay: `${index * 80}ms` }}
                 >
                   {item}
                 </button>
               ))}
               <button
                 onClick={() => setIsMenuOpen(false)}
-                className="absolute top-6 right-6 text-white hover:text-emerald-400 p-2 bg-gray-900/50 rounded-full backdrop-blur-sm"
+                className="fixed top-6 right-6 text-white hover:text-emerald-400 p-3 bg-gray-900/80 rounded-full backdrop-blur-sm border border-white/10"
               >
                 <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -279,48 +284,60 @@ const MainPage = () => {
 
       <div className="pt-16">
         {/* Hero Section */}
-        <section ref={homeRef} className="relative w-full h-screen flex items-center justify-center bg-cover bg-center" style={{backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url("/modern-house.jpg")'}}>
+        <section
+          ref={homeRef}
+          className="relative w-full min-h-screen flex items-center justify-center bg-cover bg-center"
+          style={{ backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url("/modern-house.jpg")' }}
+        >
           <div className="absolute inset-0 bg-gradient-to-b from-gray-900/50 to-black"></div>
-          <div className="container mx-auto text-center relative z-10 px-4 max-w-4xl">
-            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400 px-4 leading-tight">
-              The Build Game
-            </h1>
-            <p className="text-xl sm:text-2xl lg:text-3xl mb-6 text-gray-100 max-w-3xl mx-auto font-light px-4 leading-tight">
-              Sell Your Property Fast. No Agents. No Fees.
-            </p>
-            <p className="text-lg sm:text-xl mb-12 text-gray-300 max-w-2xl mx-auto px-6 leading-relaxed">
-              Get a cash offer within 24 hours. Close on your timeline. Skip the stress of selling your home, condo, or apartment.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 px-6">
-              <button 
-                onClick={() => scrollToSection(contactRef, 'contact')} 
-                className="bg-gradient-to-r from-blue-500 to-emerald-500 hover:from-blue-600 hover:to-emerald-600 py-5 px-8 sm:px-12 rounded-lg text-white font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-blue-500/30 w-full sm:w-auto"
+          <div className="container mx-auto text-center relative z-10 px-4 max-w-4xl flex flex-col justify-center items-center"
+            style={{ minHeight: 'calc(100vh - 4rem)' }}
+          >
+            <div className="flex flex-col justify-center items-center w-full" style={{ flex: 1 }}>
+              <h1
+                className="text-7xl sm:text-9xl lg:text-[8rem] font-extrabold mb-8 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400 px-2 leading-tight"
+                style={{ marginTop: '10vh', lineHeight: 1.05 }}
               >
-                Get Your Cash Offer Now
-              </button>
-              <button 
-                onClick={() => scrollToSection(servicesRef, 'services')} 
-                className="bg-white/10 backdrop-blur-sm hover:bg-white/20 py-5 px-8 sm:px-12 rounded-lg text-white font-semibold text-lg transition-all duration-300 transform hover:scale-105 border border-white/30 w-full sm:w-auto"
-              >
-                How It Works
-              </button>
-            </div>
-            <div className="mt-12 sm:mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-3xl mx-auto text-center px-6">
-              <div className="bg-gray-900/30 backdrop-blur-sm p-4 rounded-xl border border-white/5">
-                <h3 className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-2">24h</h3>
-                <p className="text-sm sm:text-base text-gray-300">Cash Offer Timeline</p>
-              </div>
-              <div className="bg-gray-900/30 backdrop-blur-sm p-4 rounded-xl border border-white/5">
-                <h3 className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-2">7 Days</h3>
-                <p className="text-sm sm:text-base text-gray-300">Average Closing Time</p>
-              </div>
-              <div className="bg-gray-900/30 backdrop-blur-sm p-4 rounded-xl border border-white/5">
-                <h3 className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-2">0%</h3>
-                <p className="text-sm sm:text-base text-gray-300">Agent Commission</p>
+                The Build Game
+              </h1>
+              <p className="text-lg sm:text-2xl lg:text-3xl mb-6 text-gray-100 max-w-3xl mx-auto font-light px-4 leading-tight">
+                Sell Your Property Fast. No Agents. No Fees.
+              </p>
+              <p className="text-base sm:text-xl mb-12 text-gray-300 max-w-2xl mx-auto px-6 leading-relaxed">
+                Get a cash offer within 24 hours. Close on your timeline. Skip the stress of selling your home, condo, or apartment.
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 px-6">
+                <button
+                  onClick={() => scrollToSection(contactRef, 'contact')}
+                  className="bg-gradient-to-r from-blue-500 to-emerald-500 hover:from-blue-600 hover:to-emerald-600 py-5 px-8 sm:px-12 rounded-lg text-white font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-blue-500/30 w-full sm:w-auto"
+                >
+                  Get Your Cash Offer Now
+                </button>
+                <button
+                  onClick={() => scrollToSection(servicesRef, 'services')}
+                  className="bg-white/10 backdrop-blur-sm hover:bg-white/20 py-5 px-8 sm:px-12 rounded-lg text-white font-semibold text-lg transition-all duration-300 transform hover:scale-105 border border-white/30 w-full sm:w-auto"
+                >
+                  How It Works
+                </button>
               </div>
             </div>
           </div>
         </section>
+        {/* Stats below the fold for mobile, visible after scroll */}
+        <div className="mt-12 sm:mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-3xl mx-auto text-center px-6">
+          <div className="bg-gray-900/30 backdrop-blur-sm p-4 rounded-xl border border-white/5">
+            <h3 className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-2">24h</h3>
+            <p className="text-sm sm:text-base text-gray-300">Cash Offer Timeline</p>
+          </div>
+          <div className="bg-gray-900/30 backdrop-blur-sm p-4 rounded-xl border border-white/5">
+            <h3 className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-2">7 Days</h3>
+            <p className="text-sm sm:text-base text-gray-300">Average Closing Time</p>
+          </div>
+          <div className="bg-gray-900/30 backdrop-blur-sm p-4 rounded-xl border border-white/5">
+            <h3 className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-2">0%</h3>
+            <p className="text-sm sm:text-base text-gray-300">Agent Commission</p>
+          </div>
+        </div>
 
         {/* Problem & Solution Section */}
         <section className="py-24 bg-gradient-to-b from-black via-gray-900 to-black">
