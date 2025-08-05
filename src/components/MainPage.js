@@ -500,7 +500,7 @@ const MainPage = () => {
                       </svg>
                     </a>
                   </div>
-                  <p className="text-gray-300 font-medium">Chief Acquisitions Officer</p>
+                  <p className="text-gray-300 font-medium">CEO & Lead Investor</p>
                   <p className="text-gray-400 mt-4 leading-relaxed flex-grow">
                     A native Arizonan with over 15 years in real estate, Weston has closed hundreds of successful deals throughout the Phoenix metropolitan area. His deep understanding of the local market and commitment to transparent transactions has earned him a reputation as one of Arizona's most trusted real estate professionals.
                   </p>
