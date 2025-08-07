@@ -2,12 +2,60 @@ import React, { useState, useRef, useEffect } from 'react';
 import ServiceCard from './ServiceCard';
 import ContactForm from './ContactForm';
 
+const projectImages = [
+  '/one.JPG',
+  '/two.JPG',
+  '/three.JPG',
+  '/four.JPG',
+  '/five.JPG',
+  '/six.JPG',
+  '/seven.JPG',
+  '/eight.JPG',
+];
+
+function ProjectsSlideshow() {
+  const [current, setCurrent] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % projectImages.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
+  return (
+    <div className="relative w-full max-w-7xl mx-auto">
+      <div className="overflow-hidden rounded-2xl shadow-2xl" style={{ position: 'relative', height: '28rem' }}>
+        {projectImages.map((src, idx) => (
+          <img
+            key={src}
+            src={src}
+            alt={`Project ${idx + 1}`}
+            className={`w-full h-full object-cover transition-opacity duration-1000 absolute top-0 left-0 ${current === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+            style={{ transitionProperty: 'opacity', height: '28rem' }}
+          />
+        ))}
+        <div className="relative w-full" style={{ height: '28rem' }}></div>
+      </div>
+      <div className="flex justify-center mt-6 space-x-2">
+        {projectImages.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrent(idx)}
+            className={`w-3 h-3 rounded-full ${current === idx ? 'bg-emerald-400' : 'bg-gray-600'} transition-colors duration-300`}
+            aria-label={`Go to slide ${idx + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 const MainPage = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const homeRef = useRef(null);
   const servicesRef = useRef(null);
   const aboutRef = useRef(null);
+  const projectsRef = useRef(null);
   const contactRef = useRef(null);
   const missionRef = useRef(null);
 
@@ -194,13 +242,14 @@ const MainPage = () => {
           <div className="flex items-center justify-between h-16">
             {/* Desktop navigation */}
             <div className="flex items-center justify-center flex-1">
-              {['Home', 'Services', 'About Us', 'Contact Us', 'Our Mission'].map((item) => (
+              {['Home', 'Services', 'About Us', 'Our Projects', 'Contact Us', 'Our Mission'].map((item) => (
                 <button 
                   key={item}
                   onClick={() => scrollToSection(
                     item === 'Home' ? homeRef :
                     item === 'Services' ? servicesRef :
                     item === 'About Us' ? aboutRef :
+                    item === 'Our Projects' ? projectsRef :
                     item === 'Contact Us' ? contactRef :
                     missionRef,
                     item.toLowerCase().replace(' ', '')
@@ -260,7 +309,7 @@ const MainPage = () => {
         isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
       }`}>
         <div className="flex flex-col items-center justify-center min-h-screen p-12 space-y-8">
-          {['Home', 'Services', 'About Us', 'Contact Us', 'Our Mission'].map((item, index) => (
+          {['Home', 'Services', 'About Us', 'Our Projects', 'Contact Us', 'Our Mission'].map((item, index) => (
             <button
               key={item}
               onClick={() => {
@@ -268,6 +317,7 @@ const MainPage = () => {
                   item === 'Home' ? homeRef :
                   item === 'Services' ? servicesRef :
                   item === 'About Us' ? aboutRef :
+                  item === 'Our Projects' ? projectsRef :
                   item === 'Contact Us' ? contactRef :
                   missionRef,
                   item.toLowerCase().replace(' ', '')
@@ -315,7 +365,7 @@ const MainPage = () => {
                 Sell Your Property Fast. No Agents. No Fees.
               </p>
               <p className="text-base sm:text-xl mb-12 text-gray-300 max-w-2xl mx-auto px-6 leading-relaxed">
-                Get a cash offer within 24 hours. Close on your timeline. Skip the stress of selling your home, condo, or apartment.
+                Get a cash offer within 24 hours. Close on your timeline. Skip the stress of selling your land, home, condo, or apartment.
               </p>
               <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 px-6">
                 <button
@@ -356,8 +406,8 @@ const MainPage = () => {
             <div className="max-w-6xl mx-auto">
               {/* Problem Statement */}
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold mb-6 text-emerald-400">Why Traditional Home Selling Doesn't Work Anymore</h2>
-                <p className="text-xl text-gray-300 mb-8">The old way of selling homes is slow, expensive, and full of uncertainty. We've got a better solution.</p>
+                <h2 className="text-4xl font-bold mb-6 text-emerald-400">Why Traditional Property Selling Doesn't Work Anymore</h2>
+                <p className="text-xl text-gray-300 mb-8">The old way of selling real estate is slow, expensive, and full of uncertainty. We've got a better solution.</p>
               </div>
 
               {/* Problem Details */}
@@ -423,7 +473,7 @@ const MainPage = () => {
               {/* Call to Action */}
               <div className="text-center">
                 <p className="text-2xl font-semibold text-white mb-8">
-                  Skip the stress, keep the profit. Sell your home the smart way.
+                  Skip the stress, keep the profit. Sell us your deal the smart way.
                 </p>
                 <button 
                   onClick={() => scrollToSection(contactRef, 'contact')}
@@ -441,8 +491,8 @@ const MainPage = () => {
           <div className="absolute inset-0 bg-emerald-500/5 backdrop-blur-3xl"></div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center mb-16">
-              <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">How We Buy Your Home</h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">Our streamlined process makes selling your home as simple as possible. Here's what you can expect when working with us.</p>
+              <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">How We Buy</h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">Our streamlined process makes selling your land or property as simple as possible. Here's what you can expect when working with us.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {services.map((service, index) => (
@@ -480,9 +530,9 @@ const MainPage = () => {
                       </svg>
                     </a>
                   </div>
-                  <p className="text-gray-300 font-medium">CEO & Lead Investor</p>
+                  <p className="text-gray-300 font-medium">CEO, Lead Investor</p>
                   <p className="text-gray-400 mt-4 leading-relaxed flex-grow">
-                    Born and raised in Chandler, Arizona, Ricky studied entrepreneurship at Arizona State University before diving into real estate investing. As the founder of TechBud Solutions and a prominent YouTube educator, he's helped thousands learn the art of real estate investing. His expertise in both technology and real estate allows us to provide innovative solutions for homeowners.
+                    Ricky is one of the most consistent stock traders in the nation, with over 4,700 YouTube videos and 1.2 million subscribers, making him a staple in the investing space. His dedication to transparency and daily market insights has built a loyal community of aspiring young leaders. Beyond stocks, Ricky has fully funded, bought, and flipped over 100 properties across California and Arizona. Whether it’s in the market or real estate, Ricky’s discipline, experience, and sharp instincts continue to set him apart as a leader in both industries.
                   </p>
                 </div>
 
@@ -500,17 +550,28 @@ const MainPage = () => {
                       </svg>
                     </a>
                   </div>
-                  <p className="text-gray-300 font-medium">CEO & Lead Investor</p>
+                  <p className="text-gray-300 font-medium">CEO, Lead Investor</p>
                   <p className="text-gray-400 mt-4 leading-relaxed flex-grow">
-                    A native Arizonan with over 15 years in real estate, Weston has closed hundreds of successful deals throughout the Phoenix metropolitan area. His deep understanding of the local market and commitment to transparent transactions has earned him a reputation as one of Arizona's most trusted real estate professionals.
+                    Weston is a real estate developer based in Arkansas with a track record of over 100 successful transactions and developments across the state. With a purchase portfolio exceeding 1,000 acres, his projects range from converting cattle farms into high-yield irrigated cropland to independently developing 250-acre residential neighborhoods. He has also revitalized underperforming Airbnb properties, turning them into profitable, automated business machines. Known for his hands-on approach and vision for unlocking land potential, Weston blends strategic investment with a deep understanding of Arkansas’s landscape. His work reflects a passion for growth, rural revitalization, and creating long-term value in the communities he serves.
                   </p>
                 </div>
               </div>
 
               <p className="text-gray-300 text-lg leading-relaxed">
-                Together, we're revolutionizing how homeowners sell their properties in Arizona. Our technology-driven approach combined with years of local market expertise ensures you get the best possible deal with the least amount of hassle.
+                Together, we're revolutionizing how people sell their properties. Our technology-driven approach combined with years of local market expertise ensures you get the best possible deal with the least amount of hassle.
               </p>
             </div>
+          </div>
+        </section>
+
+        {/* Our Projects Slideshow Section */}
+        <section ref={projectsRef} className="py-24 bg-gradient-to-b from-black via-gray-900 to-black relative overflow-hidden">
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-16">
+              <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">Our Projects</h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">A showcase of some of our recent land and property projects. We take pride in transforming land and real estate into valuable opportunities.</p>
+            </div>
+            <ProjectsSlideshow />
           </div>
         </section>
 
@@ -549,7 +610,7 @@ const MainPage = () => {
                   Reimagining Real Estate
                 </h2>
                 <p className="text-xl text-gray-300 px-4">
-                  Building a better way to sell your property in Arizona
+                  Building a better way to sell your property, land, or project.
                 </p>
               </div>
               
@@ -562,7 +623,7 @@ const MainPage = () => {
                   </div>
                   <h3 className="text-xl font-semibold text-white mb-4">Speed & Simplicity</h3>
                   <p className="text-gray-300">
-                    We've streamlined the home-selling process to close deals in as little as 7 days. No more endless waiting and uncertainty.
+                    We've streamlined the selling process to close deals in as little as 7 days. No more endless waiting and uncertainty.
                   </p>
                 </div>
 
@@ -574,7 +635,7 @@ const MainPage = () => {
                   </div>
                   <h3 className="text-xl font-semibold text-white mb-4">Fair Value</h3>
                   <p className="text-gray-300">
-                    Get the best possible price for your home with our transparent pricing and zero hidden fees or commissions.
+                    Get the best possible price for your land or property with our transparent pricing and zero hidden fees or commissions.
                   </p>
                 </div>
 
@@ -586,14 +647,14 @@ const MainPage = () => {
                   </div>
                   <h3 className="text-xl font-semibold text-white mb-4">Peace of Mind</h3>
                   <p className="text-gray-300">
-                    Sell your home with confidence, knowing you're working with Arizona's most trusted real estate investors.
+                    Sell with confidence, knowing you're working with trusted real estate investors and developers.
                   </p>
                 </div>
               </div>
 
               <div className="text-center bg-gradient-to-r from-emerald-900/30 to-blue-900/30 backdrop-blur-xl p-12 rounded-2xl border border-white/5">
                 <p className="text-2xl text-white font-light mb-8 leading-relaxed">
-                  "Our vision is to create a world where selling your home is as simple as a handshake. No complications, no stress — just a fair deal and a quick close."
+                  "Our vision is to create a world where selling your property is as simple as a handshake. No complications, no stress — just a fair deal and a quick close."
                 </p>
                 <p className="text-emerald-400 font-semibold">— Ricky Gutierrez, CEO & Founder</p>
               </div>
