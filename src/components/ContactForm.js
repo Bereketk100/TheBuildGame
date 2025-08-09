@@ -10,6 +10,7 @@ const ContactForm = () => {
     state: '',
     zipCode: '',
     propertyType: '',
+    landType: '',
     bedrooms: '',
     bathrooms: '',
     squareFeet: '',
@@ -56,6 +57,7 @@ const ContactForm = () => {
           state: '',
           zipCode: '',
           propertyType: '',
+          landType: '',
           bedrooms: '',
           bathrooms: '',
           squareFeet: '',
@@ -188,6 +190,7 @@ const ContactForm = () => {
             className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-white/5 rounded-xl focus:outline-none focus:border-emerald-500/50 text-white placeholder-gray-400 transition-all duration-300"
           >
             <option value="">Select Property Type</option>
+            <option value="land">Land</option>
             <option value="single-family">Single Family Home</option>
             <option value="multi-family">Multi-Family Home</option>
             <option value="townhouse">Townhouse</option>
@@ -201,9 +204,34 @@ const ContactForm = () => {
             value={formData.yearBuilt}
             onChange={handleChange}
             placeholder="Year Built"
+            required
             className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-white/5 rounded-xl focus:outline-none focus:border-emerald-500/50 text-white placeholder-gray-400 transition-all duration-300"
           />
         </div>
+        
+        {/* Land Type Dropdown - only show if Land is selected */}
+        {formData.propertyType === 'land' && (
+          <div className="grid md:grid-cols-1 gap-4">
+            <select
+              name="landType"
+              value={formData.landType}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-white/5 rounded-xl focus:outline-none focus:border-emerald-500/50 text-white placeholder-gray-400 transition-all duration-300"
+            >
+              <option value="">Select Land Type</option>
+              <option value="residential">Residential Land</option>
+              <option value="commercial">Commercial Land</option>
+              <option value="agricultural">Agricultural Land</option>
+              <option value="industrial">Industrial Land</option>
+              <option value="recreational">Recreational Land</option>
+              <option value="vacant">Vacant Lot</option>
+              <option value="development">Development Land</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        )}
+        
         <div className="grid md:grid-cols-3 gap-4">
           <input
             type="number"
@@ -211,6 +239,7 @@ const ContactForm = () => {
             value={formData.bedrooms}
             onChange={handleChange}
             placeholder="# of Bedrooms"
+            required
             className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-white/5 rounded-xl focus:outline-none focus:border-emerald-500/50 text-white placeholder-gray-400 transition-all duration-300"
           />
           <input
@@ -219,6 +248,7 @@ const ContactForm = () => {
             value={formData.bathrooms}
             onChange={handleChange}
             placeholder="# of Bathrooms"
+            required
             className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-white/5 rounded-xl focus:outline-none focus:border-emerald-500/50 text-white placeholder-gray-400 transition-all duration-300"
           />
           <input
@@ -227,6 +257,7 @@ const ContactForm = () => {
             value={formData.squareFeet}
             onChange={handleChange}
             placeholder="Square Feet"
+            required
             className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-white/5 rounded-xl focus:outline-none focus:border-emerald-500/50 text-white placeholder-gray-400 transition-all duration-300"
           />
         </div>
@@ -239,6 +270,7 @@ const ContactForm = () => {
           name="reason"
           value={formData.reason}
           onChange={handleChange}
+          required
           className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-white/5 rounded-xl focus:outline-none focus:border-emerald-500/50 text-white placeholder-gray-400 transition-all duration-300"
         >
           <option value="">Reason for Selling</option>
@@ -250,20 +282,38 @@ const ContactForm = () => {
           <option value="other">Other</option>
         </select>
 
-        <textarea
-          name="additionalInfo"
-          value={formData.additionalInfo}
-          onChange={handleChange}
-          placeholder="Additional Information (repairs needed, current condition, etc.)"
-          rows={4}
-          className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-white/5 rounded-xl focus:outline-none focus:border-emerald-500/50 text-white placeholder-gray-400 transition-all duration-300 resize-none"
-        ></textarea>
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            <span className="text-emerald-400">Property Description</span> 
+            <span className="block text-xs text-gray-400 mt-1">
+              Please provide detailed information about your property including parcel ID and/or complete property address
+            </span>
+          </label>
+          <textarea
+            name="additionalInfo"
+            value={formData.additionalInfo}
+            onChange={handleChange}
+            placeholder="Describe your property in detail - include parcel ID, address, condition, features, size, etc."
+            rows={4}
+            maxLength={150}
+            required
+            className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-white/5 rounded-xl focus:outline-none focus:border-emerald-500/50 text-white placeholder-gray-400 transition-all duration-300 resize-none"
+          ></textarea>
+          <div className="flex justify-between items-center text-xs">
+            <span className={`${formData.additionalInfo.length < 150 ? 'text-red-400' : 'text-emerald-400'}`}>
+              {formData.additionalInfo.length < 150 ? 'Please provide more details to reach 150 characters' : 'Perfect! Description complete'}
+            </span>
+            <span className="text-gray-400">
+              {formData.additionalInfo.length}/150 characters
+            </span>
+          </div>
+        </div>
       </div>
 
       <div className="pt-4">
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || formData.additionalInfo.length < 150}
           className="w-full px-8 py-4 bg-gradient-to-r from-blue-500 to-emerald-500 hover:from-blue-600 hover:to-emerald-600 text-white rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-emerald-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-xl hover:shadow-emerald-500/30 backdrop-blur-xl"
         >
           {isSubmitting ? (
@@ -274,6 +324,8 @@ const ContactForm = () => {
               </svg>
               Processing...
             </div>
+          ) : formData.additionalInfo.length < 150 ? (
+            `Complete Description (${150 - formData.additionalInfo.length} more characters needed)`
           ) : (
             'Get Your Cash Offer Now'
           )}

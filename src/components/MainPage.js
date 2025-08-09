@@ -3,14 +3,9 @@ import ServiceCard from './ServiceCard';
 import ContactForm from './ContactForm';
 
 const projectImages = [
-  '/one.JPG',
-  '/two.JPG',
-  '/three.JPG',
-  '/four.JPG',
-  '/five.JPG',
-  '/six.JPG',
-  '/seven.JPG',
-  '/eight.JPG',
+  '/one.jpg',
+  '/two.png',
+  '/three.jpg',
 ];
 
 function ProjectsSlideshow() {
@@ -18,7 +13,7 @@ function ProjectsSlideshow() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % projectImages.length);
-    }, 3500);
+    }, 6000);
     return () => clearInterval(interval);
   }, []);
   return (
