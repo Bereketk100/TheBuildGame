@@ -25,10 +25,35 @@ const ContactForm = () => {
   
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    
+    if (name === 'propertyType') {
+      if (value === 'land') {
+        // When land is selected, set building-specific fields to N/A but keep square feet available
+        setFormData(prev => ({
+          ...prev,
+          [name]: value,
+          bedrooms: 'N/A',
+          bathrooms: 'N/A',
+          squareFeet: '',
+          yearBuilt: 'N/A'
+        }));
+      } else {
+        // When any other property type is selected, clear the fields for normal input
+        setFormData(prev => ({
+          ...prev,
+          [name]: value,
+          bedrooms: '',
+          bathrooms: '',
+          squareFeet: '',
+          yearBuilt: ''
+        }));
+      }
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
   };
 
   function onSubmit(e) {
@@ -199,13 +224,14 @@ const ContactForm = () => {
             <option value="other">Other</option>
           </select>
           <input
-            type="number"
+            type={formData.propertyType === 'land' ? 'text' : 'number'}
             name="yearBuilt"
             value={formData.yearBuilt}
             onChange={handleChange}
             placeholder="Year Built"
             required
-            className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-white/5 rounded-xl focus:outline-none focus:border-emerald-500/50 text-white placeholder-gray-400 transition-all duration-300"
+            disabled={formData.propertyType === 'land'}
+            className={`w-full px-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-white/5 rounded-xl focus:outline-none focus:border-emerald-500/50 text-white placeholder-gray-400 transition-all duration-300 ${formData.propertyType === 'land' ? 'opacity-50 cursor-not-allowed' : ''}`}
           />
         </div>
         
@@ -234,22 +260,24 @@ const ContactForm = () => {
         
         <div className="grid md:grid-cols-3 gap-4">
           <input
-            type="number"
+            type={formData.propertyType === 'land' ? 'text' : 'number'}
             name="bedrooms"
             value={formData.bedrooms}
             onChange={handleChange}
             placeholder="# of Bedrooms"
             required
-            className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-white/5 rounded-xl focus:outline-none focus:border-emerald-500/50 text-white placeholder-gray-400 transition-all duration-300"
+            disabled={formData.propertyType === 'land'}
+            className={`w-full px-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-white/5 rounded-xl focus:outline-none focus:border-emerald-500/50 text-white placeholder-gray-400 transition-all duration-300 ${formData.propertyType === 'land' ? 'opacity-50 cursor-not-allowed' : ''}`}
           />
           <input
-            type="number"
+            type={formData.propertyType === 'land' ? 'text' : 'number'}
             name="bathrooms"
             value={formData.bathrooms}
             onChange={handleChange}
             placeholder="# of Bathrooms"
             required
-            className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-white/5 rounded-xl focus:outline-none focus:border-emerald-500/50 text-white placeholder-gray-400 transition-all duration-300"
+            disabled={formData.propertyType === 'land'}
+            className={`w-full px-4 py-3 bg-gray-800/50 backdrop-blur-xl border border-white/5 rounded-xl focus:outline-none focus:border-emerald-500/50 text-white placeholder-gray-400 transition-all duration-300 ${formData.propertyType === 'land' ? 'opacity-50 cursor-not-allowed' : ''}`}
           />
           <input
             type="number"

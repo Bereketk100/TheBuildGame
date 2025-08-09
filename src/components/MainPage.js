@@ -2,55 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import ServiceCard from './ServiceCard';
 import ContactForm from './ContactForm';
 
-const projectImages = [
-  '/one.jpg',
-  '/two.png',
-  '/three.jpg',
-];
-
-function ProjectsSlideshow() {
-  const [current, setCurrent] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % projectImages.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, []);
-  return (
-    <div className="relative w-full max-w-7xl mx-auto">
-      <div className="overflow-hidden rounded-2xl shadow-2xl" style={{ position: 'relative', height: '28rem' }}>
-        {projectImages.map((src, idx) => (
-          <img
-            key={src}
-            src={src}
-            alt={`Project ${idx + 1}`}
-            className={`w-full h-full object-cover transition-opacity duration-1000 absolute top-0 left-0 ${current === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-            style={{ transitionProperty: 'opacity', height: '28rem' }}
-          />
-        ))}
-        <div className="relative w-full" style={{ height: '28rem' }}></div>
-      </div>
-      <div className="flex justify-center mt-6 space-x-2">
-        {projectImages.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => setCurrent(idx)}
-            className={`w-3 h-3 rounded-full ${current === idx ? 'bg-emerald-400' : 'bg-gray-600'} transition-colors duration-300`}
-            aria-label={`Go to slide ${idx + 1}`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
 const MainPage = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const homeRef = useRef(null);
   const servicesRef = useRef(null);
   const aboutRef = useRef(null);
-  const projectsRef = useRef(null);
   const contactRef = useRef(null);
   const missionRef = useRef(null);
 
@@ -237,14 +194,13 @@ const MainPage = () => {
           <div className="flex items-center justify-between h-16">
             {/* Desktop navigation */}
             <div className="flex items-center justify-center flex-1">
-              {['Home', 'Services', 'About Us', 'Our Projects', 'Contact Us', 'Our Mission'].map((item) => (
+              {['Home', 'Services', 'About Us', 'Contact Us', 'Our Mission'].map((item) => (
                 <button 
                   key={item}
                   onClick={() => scrollToSection(
                     item === 'Home' ? homeRef :
                     item === 'Services' ? servicesRef :
                     item === 'About Us' ? aboutRef :
-                    item === 'Our Projects' ? projectsRef :
                     item === 'Contact Us' ? contactRef :
                     missionRef,
                     item.toLowerCase().replace(' ', '')
@@ -304,7 +260,7 @@ const MainPage = () => {
         isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
       }`}>
         <div className="flex flex-col items-center justify-center min-h-screen p-12 space-y-8">
-          {['Home', 'Services', 'About Us', 'Our Projects', 'Contact Us', 'Our Mission'].map((item, index) => (
+          {['Home', 'Services', 'About Us', 'Contact Us', 'Our Mission'].map((item, index) => (
             <button
               key={item}
               onClick={() => {
@@ -312,7 +268,6 @@ const MainPage = () => {
                   item === 'Home' ? homeRef :
                   item === 'Services' ? servicesRef :
                   item === 'About Us' ? aboutRef :
-                  item === 'Our Projects' ? projectsRef :
                   item === 'Contact Us' ? contactRef :
                   missionRef,
                   item.toLowerCase().replace(' ', '')
@@ -556,17 +511,6 @@ const MainPage = () => {
                 Together, we're revolutionizing how people sell their properties. Our technology-driven approach combined with years of local market expertise ensures you get the best possible deal with the least amount of hassle.
               </p>
             </div>
-          </div>
-        </section>
-
-        {/* Our Projects Slideshow Section */}
-        <section ref={projectsRef} className="py-24 bg-gradient-to-b from-black via-gray-900 to-black relative overflow-hidden">
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="text-center mb-16">
-              <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">Our Projects</h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">A showcase of some of our recent land and property projects. We take pride in transforming land and real estate into valuable opportunities.</p>
-            </div>
-            <ProjectsSlideshow />
           </div>
         </section>
 
